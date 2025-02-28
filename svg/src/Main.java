@@ -5,8 +5,12 @@ public class Main {
         p.y = 2.0;
 
         System.out.println(p);
-        p.translate(2.0, 1.0);
         System.out.println(p);
-        System.out.println("\nOriginal point: " + p + "\nTranslated point: " + p.translated(2.0, 1.0));
+        Point p2 = p.translated(2.0, 1.0);
+        System.out.println(p + "\n" + p2);
+        Segment s1 = new Segment();
+//        s1 =
+        System.out.println(s1);
+
     }
 }
