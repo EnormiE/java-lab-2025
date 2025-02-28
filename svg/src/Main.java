@@ -4,8 +4,9 @@ public class Main {
         p.x = 4.5;
         p.y = 2.0;
 
-//        System.out.println(p.x + ", " + p.y);
         System.out.println(p);
-        System.out.println(p.toSvg());
+        p.translate(2.0, 1.0);
+        System.out.println(p);
+        System.out.println("\nOriginal point: " + p + "\nTranslated point: " + p.translated(2.0, 1.0));
     }
 }
