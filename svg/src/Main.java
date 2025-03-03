@@ -18,16 +18,6 @@ public class Main {
         System.out.println("p: "+ p + "\np2: " + p2 + "\np3: " + p3);
         Segment[] segments = {s1, s2};
 //        System.out.println("\n" + segments[0].length() + " " + segments[1].length());
-        System.out.println("The longest segment:\n" + longest_segment(segments).a + " - " + longest_segment(segments).b);
-    }
-
-    public static Segment longest_segment(Segment[] segments) {
-        Segment longest = segments[0];
-        for (Segment segment : segments) {
-            if (segment.length() >= longest.length()) {
-                longest = segment;
-            }
-        }
-        return longest;
+        System.out.println("The longest segment:\n" + Segment.longest_segment(segments).a + " - " + Segment.longest_segment(segments).b);
     }
 }
