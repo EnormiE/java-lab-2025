@@ -1,8 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-//        Point p = new Point();
-//        p.setX(4.5);
-//        p.setY(2.0);
+        polygons();
+    }
+
+    public static void oldCode() {
         Point p = new Point(4.5, 2.0);
 
         Point p2 = p.translated(2.0, 1.0);
@@ -20,5 +21,17 @@ public class Main {
 
         Segment s3 = new Segment(new Point(0.0, 0.0), new Point(1.0, 1.0));
         System.out.println("\n" + s3);
+    }
+
+    public static void polygons() {
+        Point[] points = {
+                new Point(10.0, 50.0),
+                new Point(50.0, 100.0),
+                new Point(100.0, 150.0)
+        };
+
+        Polygon polygon = new Polygon(points);
+        System.out.println(polygon);
+        System.out.println(polygon.toSvg());
     }
 }
