@@ -5,16 +5,18 @@ public class SvgScene {
     private int index = 0;
 
     public void addPolygon(Polygon polygon) {
-//        if (index >= polygons.length) {
-//            this.index = 0;
-//            this.polygons[index] = polygon;
-//            this.index++;
-//        }
-//        else {
-//            this.polygons[index] = polygon;
-//            this.index++;
-//        }
         polygons[(index++) % 3] = polygon;
+    }
+
+    public String toSvg()
+    {
+        String result = "<svg xmlns=\"http://www.w3.org/2000/svg\">";
+        for(var polygon : polygons) // var == automatyczny typ zmiennej
+        {
+            result += "\n\t" + polygon.toSvg();
+        }
+        result += "\n</svg>";
+        return result;
     }
 
     @Override
