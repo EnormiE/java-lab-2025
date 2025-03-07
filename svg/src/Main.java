@@ -33,5 +33,7 @@ public class Main {
         Polygon polygon = new Polygon(points);
         System.out.println(polygon);
         System.out.println(polygon.toSvg());
+        points[0].setX(2.0); // test czy głęboka kopia działa
+        System.out.println(polygon.toSvg());
     }
 }
