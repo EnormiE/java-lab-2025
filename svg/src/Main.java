@@ -1,6 +1,7 @@
 public class Main {
     public static void main(String[] args) {
-        polygons();
+//        polygons();
+        scene();
     }
 
     public static void oldCode() {
@@ -35,5 +36,23 @@ public class Main {
         System.out.println(polygon.toSvg());
         points[0].setX(2.0); // test czy głęboka kopia działa
         System.out.println(polygon.toSvg());
+    }
+
+    public static void scene() {
+        Polygon polygon1 = new Polygon(new Point[]{new Point(1.0, 10.0)});
+        Polygon polygon2 = new Polygon(new Point[]{new Point(2.0, 20.0)});
+        Polygon polygon3 = new Polygon(new Point[]{new Point(3.0, 30.5)});
+        Polygon polygon4 = new Polygon(new Point[]{new Point(4.0, 40.5)});
+
+        SvgScene scene = new SvgScene();
+        scene.addPolygon(polygon1);
+        System.out.println(scene);
+
+        scene.addPolygon(polygon2);
+        scene.addPolygon(polygon3);
+        System.out.println(scene);
+
+        scene.addPolygon(polygon4);
+        System.out.println(scene);
     }
 }
