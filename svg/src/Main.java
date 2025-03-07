@@ -1,8 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        Point p = new Point();
-        p.x = 4.5;
-        p.y = 2.0;
+//        Point p = new Point();
+//        p.setX(4.5);
+//        p.setY(2.0);
+        Point p = new Point(4.5, 2.0);
 
         Point p2 = p.translated(2.0, 1.0);
 

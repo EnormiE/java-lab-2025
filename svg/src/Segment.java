@@ -2,7 +2,7 @@ public class Segment {
     public Point a;
     public Point b;
     public double length() {
-        return Math.hypot((a.x - b.x), (a.y - b.y));
+        return Math.hypot((a.getX() - b.getX()), (a.getY() - b.getY()));
     }
 
     public static Segment longest_segment(Segment[] segments) {
