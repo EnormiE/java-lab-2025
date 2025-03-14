@@ -1,9 +1,8 @@
 import java.util.Arrays;
 import java.util.Locale;
 
-public class Polygon {
+public class Polygon extends Shape {
     private Point[] points;
-    private Style style;
 
     // głęboka kopia punktów
     public Polygon(Point[] points) {
@@ -11,7 +10,6 @@ public class Polygon {
         for (int i = 0; i < points.length; i++) {
             this.points[i] = new Point(points[i]);
         }
-        this.style = new Style("none", "black", 1.0);
     }
 
     // ze stylem
@@ -20,7 +18,7 @@ public class Polygon {
         for (int i = 0; i < points.length; i++) {
             this.points[i] = new Point(points[i]);
         }
-        this.style = style;
+        super.style = style;
     }
 
     @Override
@@ -36,7 +34,7 @@ public class Polygon {
         for(Point point : points) {
             pointsString += point.getX() + "," + point.getY() + " ";
         }
-        return String.format(Locale.ENGLISH, "<polygon points=\"%s\" style=\"%s\" />", pointsString, style.toSvg());
+        return String.format(Locale.ENGLISH, "<polygon points=\"%s\" style=\"%s\" />", pointsString, super.style.toSvg());
     }
 
     public BoundingBox boundingBox() {
