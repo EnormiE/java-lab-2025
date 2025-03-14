@@ -41,6 +41,9 @@ public class Main {
     }
 
     public static void scene() throws FileNotFoundException {
+
+        Style style = new Style("yellow", "yellow", 3.0);
+
         Polygon polygon1 = new Polygon(new Point[]{
                 new Point(15.0, 6.5),
                 new Point(40.0, 1.5),
@@ -50,12 +53,15 @@ public class Main {
                 new Point(116.0, 53.5),
                 new Point(86.0, 33.5),
                 new Point(20.0, 118)
-        });
+        }
+        );
         Polygon polygon3 = new Polygon(new Point[]{
                 new Point(88.0, 8.5),
                 new Point(10, 20),
                 new Point(25, 45)
-        });
+        },
+                style
+        );
 
         SvgScene scene = new SvgScene();
         scene.addPolygon(polygon1);
