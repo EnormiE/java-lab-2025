@@ -54,3 +54,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### SVG ###
+.svg
+*.svg
