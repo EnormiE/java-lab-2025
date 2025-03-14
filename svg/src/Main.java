@@ -60,6 +60,8 @@ public class Main {
         scene.addPolygon(polygon2);
         scene.addPolygon(polygon3);
         System.out.println(scene);
-        System.out.println(scene.toSvg());
+        System.out.println("\n" + scene.toSvg());
+
+        System.out.println("\n" + polygon1.boundingBox());
     }
 }
