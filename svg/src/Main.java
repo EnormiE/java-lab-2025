@@ -42,7 +42,7 @@ public class Main {
 
     public static void scene() throws FileNotFoundException {
 
-        Style style = new Style("yellow", "yellow", 3.0);
+        Style style1 = new Style("yellow", "yellow", 3.0);
 
         Polygon polygon1 = new Polygon(new Point[]{
                 new Point(15.0, 6.5),
@@ -60,7 +60,7 @@ public class Main {
                 new Point(10, 20),
                 new Point(25, 45)
         },
-                style
+                style1
         );
 
         SvgScene scene = new SvgScene();
@@ -73,5 +73,11 @@ public class Main {
         System.out.println("\n" + polygon1.boundingBox());
 
         scene.save("C:\\Users\\vebar\\Documents\\GitHub\\java-lab-2025\\file.svg");
+
+        // square
+        Point p = new Point(4.5, 2.0);
+        Point p2 = p.translated(2.0, 1.0);
+        Segment s1 = new Segment(p, p2);
+        System.out.println("\n" + Polygon.square(s1, style1) );
     }
 }
