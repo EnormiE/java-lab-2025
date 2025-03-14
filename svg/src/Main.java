@@ -1,5 +1,7 @@
+import java.io.FileNotFoundException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 //        polygons();
         scene();
     }
@@ -38,19 +40,19 @@ public class Main {
         System.out.println(polygon.toSvg());
     }
 
-    public static void scene() {
+    public static void scene() throws FileNotFoundException {
         Polygon polygon1 = new Polygon(new Point[]{
-                new Point(2.0, 6.5),
-                new Point(40.0, 50.5),
-                new Point(80.0, 99.5)
+                new Point(15.0, 6.5),
+                new Point(40.0, 1.5),
+                new Point(80.0, 44.5)
         });
         Polygon polygon2 = new Polygon(new Point[]{
-                new Point(32.0, 53.5),
-                new Point(32.0, 50.5),
-                new Point(39.0, 55)
+                new Point(116.0, 53.5),
+                new Point(86.0, 33.5),
+                new Point(20.0, 118)
         });
         Polygon polygon3 = new Polygon(new Point[]{
-                new Point(4.0, 8.5),
+                new Point(88.0, 8.5),
                 new Point(10, 20),
                 new Point(25, 45)
         });
@@ -63,5 +65,7 @@ public class Main {
         System.out.println("\n" + scene.toSvg());
 
         System.out.println("\n" + polygon1.boundingBox());
+
+        scene.save("C:\\Users\\vebar\\Documents\\GitHub\\java-lab-2025\\file.svg");
     }
 }

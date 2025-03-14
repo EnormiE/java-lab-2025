@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class SvgScene {
@@ -25,5 +27,12 @@ public class SvgScene {
                 "index=" + index +
                 ", polygons=" + Arrays.toString(polygons) +
                 '}';
+    }
+
+    public void save(String path) throws FileNotFoundException {
+        // Coś z bounding boxem trzeba zrobić ale nie wiem do końca co i gdzie
+        PrintWriter save = new PrintWriter(path);
+        save.println(toSvg());
+        save.close();
     }
 }
