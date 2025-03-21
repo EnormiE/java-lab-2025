@@ -4,6 +4,10 @@ import java.util.Locale;
 public class Polygon extends Shape {
     private Point[] points;
 
+    public Point[] getPoints() {
+        return points;
+    }
+
     // głęboka kopia punktów
     public Polygon(Point[] points) {
         this.points = new Point[points.length];
