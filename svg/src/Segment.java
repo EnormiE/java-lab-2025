@@ -1,22 +1,13 @@
 public class Segment {
     private Point start;
     private Point end;
-    public double length() {
-        return Math.hypot((start.getX() - end.getX()), (start.getY() - end.getY()));
+
+    public void setStart(Point start) {
+        this.start = start;
     }
 
-    public Segment(Point a, Point b) {
-        // kopiowanie punktów
-        this.start = new Point(a);
-        this.end = new Point(b);
-    }
-
-    public void setStart(Point a) {
-        this.start = a;
-    }
-
-    public void setEnd(Point b) {
-        this.end = b;
+    public void setEnd(Point end) {
+        this.end = end;
     }
 
     public Point getStart() {
@@ -27,57 +18,96 @@ public class Segment {
         return end;
     }
 
-    @Override
-    public String toString() {
-        return "Segment{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
+//    Poprzez stworzenie NOWYCH OBIEKTÓW a nie przekazywanie REFERENCJI obiekt
+//    Segment jest niewrażliwy na zmiany pynktów z których został stworzony
+
+    public Segment(Point start, Point end) {
+        this.start = new Point(start);
+        this.end = new Point(end);
     }
 
-    public static Segment longest_segment(Segment[] segments) {
-        Segment longest = segments[0];
-        for (Segment segment : segments) {
-            if (segment.length() >= longest.length()) {
-                longest = segment;
+//    Konstruktor kopiujący
+
+    public Segment(Segment old) {
+        this.start = new Point(old.getStart().getX(), old.getStart().getY());
+        this.end = new Point(old.getEnd().getX(), old.getEnd().getY());
+
+    }
+
+    public double length(){
+        return Math.sqrt(Math.pow(this.end.getX() - this.start.getX(), 2) + Math.pow(this.end.getY() - this.start.getY(), 2));
+    }
+
+    @Override
+    public String toString(){
+        return "Punkt start odcinka: " + this.start + "\nPunkt end odcinka: " + this.end;
+    }
+
+    public static Segment maxSegment(Segment[] segments){
+        int max_len = 0;
+        Segment max_segment = segments[0];
+        for(Segment s : segments){
+            if (s.length() > max_len){
+                max_segment = s;
             }
         }
-        return longest;
+        return max_segment;
     }
 
     public Segment perpendicular() {
-// kierunek oryginalnego segmentu
-        double dx = this.end.getX() + this.start.getX();
-        double dy = this.end.getY() + this.start.getY();
+        // Obliczamy kierunek oryginalnego segmentu
+        double dx = this.end.getX() - this.start.getX();
+        double dy = this.end.getY() - this.start.getY();
+
+        // Obliczamy segment prostopadły
         double perpendicularDx = -dy;
         double perpendicularDy = dx;
+
+        // Normalizujemy prostopoadły segment (ma długość 1)
         double perpendicularLength = Math.sqrt(perpendicularDx * perpendicularDx + perpendicularDy * perpendicularDy);
         perpendicularDx /= perpendicularLength;
         perpendicularDy /= perpendicularLength;
+
+
+        // Obliczamy środkowy punkt obecnego segmentu
         double midX = (this.start.getX() + this.end.getX()) / 2;
         double midY = (this.start.getY() + this.end.getY()) / 2;
+
+        // Tworzymy nowy segment
         Point newStart = new Point(midX + perpendicularDx, midY + perpendicularDy);
         Point newEnd = new Point(midX - perpendicularDx, midY - perpendicularDy);
-// Zwracamy prostopadły segment
+
+        // Zwracamy prostopadły segment
         return new Segment(newStart, newEnd);
     }
 
     public Segment perpendicular(double length) {
-// kierunek oryginalnego segmentu
-        double dx = this.end.getX() + this.start.getX();
-        double dy = this.end.getY() + this.start.getY();
+        // Obliczamy kierunek oryginalnego segmentu
+        double dx = this.end.getX() - this.start.getX();
+        double dy = this.end.getY() - this.start.getY();
+
+        // Obliczamy segment prostopadły
         double perpendicularDx = -dy;
         double perpendicularDy = dx;
+
+        // Normalizujemy prostopoadły segment (ma długość 1)
         double perpendicularLength = Math.sqrt(perpendicularDx * perpendicularDx + perpendicularDy * perpendicularDy);
         perpendicularDx /= perpendicularLength;
         perpendicularDy /= perpendicularLength;
+
         perpendicularDx *= length;
         perpendicularDy *= length;
+
+        // Obliczamy środkowy punkt obecnego segmentu
         double midX = (this.start.getX() + this.end.getX()) / 2;
         double midY = (this.start.getY() + this.end.getY()) / 2;
+
+        // Tworzymy nowy segment
         Point newStart = new Point(midX + perpendicularDx, midY + perpendicularDy);
         Point newEnd = new Point(midX - perpendicularDx, midY - perpendicularDy);
-// Zwracamy prostopadły segment
+
+        // Zwracamy prostopadły segment
         return new Segment(newStart, newEnd);
     }
+
 }

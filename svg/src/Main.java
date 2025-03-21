@@ -20,7 +20,7 @@ public class Main {
         System.out.println("p: "+ p + "\np2: " + p2 + "\np3: " + p3);
         Segment[] segments = {s1, s2};
         System.out.println(s1 + "\n" + s2);
-        System.out.println("The longest segment:\n" + Segment.longest_segment(segments));
+        System.out.println("The longest segment:\n" + Segment.maxSegment(segments));
 
         Segment s3 = new Segment(new Point(0.0, 0.0), new Point(1.0, 1.0));
         System.out.println("\n" + s3);
