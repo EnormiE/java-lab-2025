@@ -64,20 +64,30 @@ public class Main {
         );
 
         SvgScene scene = new SvgScene();
-        scene.addPolygon(polygon1);
-        scene.addPolygon(polygon2);
-        scene.addPolygon(polygon3);
+        scene.addShape(polygon1);
+        scene.addShape(polygon2);
+        scene.addShape(polygon3);
         System.out.println(scene);
         System.out.println("\n" + scene.toSvg());
 
         System.out.println("\n" + polygon1.boundingBox());
 
-        scene.save("C:\\Users\\vebar\\Documents\\GitHub\\java-lab-2025\\file.svg");
+//        scene.save("C:\\Users\\vebar\\Documents\\GitHub\\java-lab-2025\\file.svg");
 
         // square
         Point p = new Point(4.5, 2.0);
         Point p2 = p.translated(2.0, 1.0);
         Segment s1 = new Segment(p, p2);
-        System.out.println("\n" + Polygon.square(s1, style1) );
+        System.out.println("\n" + Polygon.square(s1, style1).toSvg() );
+        scene.addShape(Polygon.square(s1, style1));
+
+        // elipse
+        Point center = new Point(30.0, 75.0);
+        Style style2 = new Style("blue", "red", 3.0);
+        Ellipse ellipse1 = new Ellipse(style2, center, 15.0, 10.0);
+        System.out.println("\n" + ellipse1.toSvg());
+        scene.addShape(ellipse1);
+        scene.save("C:\\Users\\vebar\\Documents\\GitHub\\java-lab-2025\\file.svg");
+
     }
 }
