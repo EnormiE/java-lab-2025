@@ -58,18 +58,29 @@ public class Polygon extends Shape {
     }
 
     public static Polygon square(Segment diagonal, Style style) {
-        Point[] points = new Point[4];
-        Segment perpendicular = diagonal.perpendicular(diagonal.length());
-
+        // Środek przekątnej
         double midX = (diagonal.getStart().getX() + diagonal.getEnd().getX()) / 2;
         double midY = (diagonal.getStart().getY() + diagonal.getEnd().getY()) / 2;
 
-// Pierwsze dwa punkty to początek i koniec przekątnej
-        points[0] = diagonal.getStart();
-        points[1] = diagonal.getEnd();
-// Tworzymy pozostałe dwa punkty za pomocą segmentu prostopadłego do przekątnej
-        points[2] = new Point(midX + perpendicular.getStart().getX(), midY + perpendicular.getStart().getY());
-        points[3] = new Point(midX + perpendicular.getEnd().getX(), midY + perpendicular.getEnd().getY());
-        return new Polygon(points, style);
+        // Wektor przekątnej
+        double dx = diagonal.getEnd().getX() - diagonal.getStart().getX();
+        double dy = diagonal.getEnd().getY() - diagonal.getStart().getY();
+
+        // Długość boku kwadratu (przekątna / sqrt(2))
+        double side = Math.sqrt(dx * dx + dy * dy) / Math.sqrt(2);
+
+        // Jednostkowy wektor prostopadły do przekątnej
+        double perpX = -dy / Math.sqrt(dx * dx + dy * dy);
+        double perpY = dx / Math.sqrt(dx * dx + dy * dy);
+
+        // Wyznaczanie czterech punktów kwadratu
+        Point p1 = new Point(diagonal.getStart().getX(), diagonal.getStart().getY());
+        Point p2 = new Point(diagonal.getEnd().getX(), diagonal.getEnd().getY());
+        Point p3 = new Point(midX + perpX * side / 2, midY + perpY * side / 2);
+        Point p4 = new Point(midX - perpX * side / 2, midY - perpY * side / 2);
+
+        // Zwracamy nowy obiekt Polygon
+        return new Polygon(new Point[]{p1, p3, p2, p4}, style);
     }
+
 }
