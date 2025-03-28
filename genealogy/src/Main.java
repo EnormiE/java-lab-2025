@@ -28,11 +28,12 @@ public class Main {
         list.add(p3);
 //        System.out.println("p1 adoptuje p1: " + p1.adopt(p1));
 //        System.out.println("p1 adoptuje p2: " + p1.adopt(p2));
-        System.out.println(list);
+//        System.out.println(list);
 
         p1.adopt(p2);
         p1.adopt(p3);
 
-        System.out.println(p1.getYoungestChild());
+//        System.out.println(p1.getYoungestChild());
+        System.out.println(p1.getChildren());
     }
 }

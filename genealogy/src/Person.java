@@ -1,7 +1,5 @@
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Person implements Comparable<Person> {
     private String firstName, lastName;
@@ -19,8 +17,11 @@ public class Person implements Comparable<Person> {
         return birthDate;
     }
 
-    public Set<Person> getChildren() {
-        return children;
+    public List<Person> getChildren() {
+        List<Person> list = new ArrayList<>(this.children);
+        Collections.sort(list);
+//        Collections.sort(list, Collections.reverseOrder());
+        return list;
     }
 
     public boolean adopt(Person child) {
