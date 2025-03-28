@@ -14,8 +14,8 @@ public class Family {
         this.familyMap = new HashMap<>();
     }
 
-    public void add(List<Person> list) {
-        for (Person person : list) {
+    public void add(Person... persons) {
+        for (Person person : persons) {
             String key = person.getFirstName() + " " +  person.getLastName();
             if (this.familyMap.containsKey(key)) {
                 familyMap.get(key).add(person);

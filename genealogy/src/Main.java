@@ -34,8 +34,8 @@ public class Main {
         p1.adopt(p3);
         Family family = new Family();
 
-        family.add(list);
-        family.add(list);
+        family.add(p1, p2, p2, p3);
+//        family.add(list);
         String key1= p1.getFirstName() + " " +  p1.getLastName();
         System.out.println(family.get(key1));
 
