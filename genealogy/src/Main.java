@@ -32,23 +32,15 @@ public class Main {
 
         p1.adopt(p2);
         p1.adopt(p3);
-
-//        System.out.println(p1.getYoungestChild());
         Family family = new Family();
-//        System.out.println(family);
-
-//        family.add(p1);
-//        family.add(p2);
-//        family.add(p3);
-//        String key1= p1.getFirstName() + " " +  p1.getLastName();
-//        String key2= p2.getFirstName() + " " +  p2.getLastName();
 
         family.add(list);
+        family.add(list);
+        String key1= p1.getFirstName() + " " +  p1.getLastName();
+        System.out.println(family.get(key1));
 
-        System.out.println(family);
+//        System.out.println(family);
 
-//        System.out.println(family.get(key1));
-//        System.out.println(family.get(key2));
 
     }
 }

@@ -1,11 +1,12 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Family {
-    Map<String, Person> familyMap;
+    Map<String, List<Person>> familyMap;
 
-    public Family(Map<String, Person> familyMap) {
+    public Family(Map<String, List<Person>> familyMap) {
         this.familyMap = familyMap;
     }
 
@@ -16,11 +17,19 @@ public class Family {
     public void add(List<Person> list) {
         for (Person person : list) {
             String key = person.getFirstName() + " " +  person.getLastName();
-            this.familyMap.put(key, person);
+            if (this.familyMap.containsKey(key)) {
+                familyMap.get(key).add(person);
+            }
+            else{
+                List<Person> sameList = new ArrayList<>();
+                sameList.add(person);
+                this.familyMap.put(key, sameList);
+            }
+//            this.familyMap.put(key, person);
         }
     }
 
-    public Person get(String key) {
+    public List<Person> get(String key) {
         return this.familyMap.get(key);
     }
 
