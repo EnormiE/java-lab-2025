@@ -10,11 +10,26 @@ public class Person implements Comparable<Person> {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.children = children;
+    }
+
+    public Person(String firstName, String lastName, LocalDate birthDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
         this.children = new HashSet<>();
     }
 
     public LocalDate getBirthDate() {
         return birthDate;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public List<Person> getChildren() {
@@ -64,11 +79,9 @@ public class Person implements Comparable<Person> {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDate=" + birthDate +
-                ", children=" + children +
+        return firstName + " "  + lastName + "{" +
+                "birthDate: " + birthDate +
+                ", children: " + children +
                 '}';
     }
 }
