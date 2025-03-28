@@ -14,11 +14,34 @@ public class Person {
         this.children = new HashSet<>();
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public Set<Person> getChildren() {
+        return children;
+    }
+
     public boolean adopt(Person child) {
         if (child != this) {
             children.add(child);
             return true;
         }
         return false;
+    }
+
+    public Person getYoungestChild() {
+        if (this.children == null || this.children.isEmpty()) {
+            return null;
+        }
+
+        Person youngest = this.children.iterator().next();
+
+        for (Person child : this.children) {
+            if (child.getBirthDate().isAfter(youngest.getBirthDate())) {
+                youngest = child;
+            }
+        }
+        return youngest;
     }
 }

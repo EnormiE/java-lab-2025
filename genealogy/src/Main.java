@@ -18,10 +18,21 @@ public class Main {
                 "2",
                 LocalDate.of(2002, 2, 2),
                 new HashSet<>());
+        Person p3 = new Person(
+                "3",
+                "3",
+                LocalDate.of(2003, 3, 3),
+                new HashSet<>());
         list.add(p1);
         list.add(p2);
-        System.out.println("p1 adoptuje p1: " + p1.adopt(p1));
-        System.out.println("p1 adoptuje p2: " + p1.adopt(p2));
+        list.add(p3);
+//        System.out.println("p1 adoptuje p1: " + p1.adopt(p1));
+//        System.out.println("p1 adoptuje p2: " + p1.adopt(p2));
         System.out.println(list);
+
+        p1.adopt(p2);
+        p1.adopt(p3);
+
+        System.out.println(p1.getYoungestChild());
     }
 }
