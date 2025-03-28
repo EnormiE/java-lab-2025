@@ -1,10 +1,27 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
 
         List<Person> list = new ArrayList<>();
+        Person p1 = new Person(
+                "1",
+                "1",
+                LocalDate.of(2001, 1, 1),
+                new HashSet<>());
+        Person p2 = new Person(
+                "2",
+                "2",
+                LocalDate.of(2002, 2, 2),
+                new HashSet<>());
+        list.add(p1);
+        list.add(p2);
+        System.out.println("p1 adoptuje p1: " + p1.adopt(p1));
+        System.out.println("p1 adoptuje p2: " + p1.adopt(p2));
         System.out.println(list);
     }
 }
