@@ -1,8 +1,9 @@
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-public class Person {
+public class Person implements Comparable<Person> {
     private String firstName, lastName;
     private LocalDate birthDate;
     private Set<Person> children;
@@ -38,10 +39,35 @@ public class Person {
         Person youngest = this.children.iterator().next();
 
         for (Person child : this.children) {
-            if (child.getBirthDate().isAfter(youngest.getBirthDate())) {
+//            if (child.getBirthDate().isAfter(youngest.getBirthDate())) {
+            if (child.compareTo(youngest) > 0) {
                 youngest = child;
             }
         }
         return youngest;
+    }
+
+    @Override
+    public int compareTo(Person p) {
+
+        if (this.getBirthDate().isAfter(p.getBirthDate())) {
+            return 1;
+        }
+        if (this.getBirthDate().isBefore(p.getBirthDate())) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", children=" + children +
+                '}';
     }
 }
