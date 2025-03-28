@@ -49,6 +49,7 @@ public class SvgScene {
     }
 
     public void save(String filePath) {
+        // prawie dobrze, ale jednak trochę za mały ten box
         BoundingBox box = this.boundingBox();
 
         if (box == null) {
