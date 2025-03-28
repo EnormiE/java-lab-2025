@@ -37,15 +37,17 @@ public class Main {
         Family family = new Family();
 //        System.out.println(family);
 
-        family.add(p1);
-        family.add(p2);
-        family.add(p3);
-        String key1= p1.getFirstName() + " " +  p1.getLastName();
+//        family.add(p1);
+//        family.add(p2);
+//        family.add(p3);
+//        String key1= p1.getFirstName() + " " +  p1.getLastName();
 //        String key2= p2.getFirstName() + " " +  p2.getLastName();
+
+        family.add(list);
 
         System.out.println(family);
 
-        System.out.println(family.get(key1));
+//        System.out.println(family.get(key1));
 //        System.out.println(family.get(key2));
 
     }

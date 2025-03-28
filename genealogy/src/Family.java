@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Family {
@@ -12,9 +13,11 @@ public class Family {
         this.familyMap = new HashMap<>();
     }
 
-    public void add(Person person) {
-        String key = person.getFirstName() + " " +  person.getLastName();
-        this.familyMap.put(key, person);
+    public void add(List<Person> list) {
+        for (Person person : list) {
+            String key = person.getFirstName() + " " +  person.getLastName();
+            this.familyMap.put(key, person);
+        }
     }
 
     public Person get(String key) {
