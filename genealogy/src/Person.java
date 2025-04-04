@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -97,15 +101,31 @@ public class Person implements Comparable<Person> {
     }
 
     public static Person fromCsvLine(String line) {
-//        "Marek Kowalski,15.05.1899,25.06.1957,,"
-        String firstName = line.split(",")[0].split(" ")[0];
-        String lastName = line.split(",")[0].split(" ")[1];
+//        "Anna Dąbrowska,07.02.1930,22.12.1991,Ewa Kowalska,Marek Kowalski"
+        String[] lineParts = line.split(",");
+        String firstName = lineParts[0].split(" ")[0];
+        String lastName = lineParts[0].split(" ")[1];
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate birthDate = LocalDate.parse(line.split(",")[1], formatter);
+        LocalDate birthDate = LocalDate.parse(lineParts[1],formatter);
         LocalDate deathDate = null;
-        if (!line.split(",")[2].isEmpty()) {
+        if (!lineParts[2].isEmpty()) {
             deathDate = LocalDate.parse(line.split(",")[2], formatter);
         }
         return new Person(firstName, lastName, birthDate, deathDate);
+    }
+
+    public static List<Person> fromCsv(String fileName) throws IOException {
+        List<Person> pList = new ArrayList<>();
+
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        List<String> lines = new ArrayList<>();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            pList.add(fromCsvLine(line)) ;
+        }
+
+//        System.out.println(lines.getFirst());
+
+        return pList;
     }
 }
