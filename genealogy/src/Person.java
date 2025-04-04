@@ -121,14 +121,23 @@ public class Person implements Comparable<Person> {
 
     public static List<Person> fromCsv(String fileName) {
         List<Person> pList = new ArrayList<>();
+        Set<String> names = new HashSet<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             List<String> lines = new ArrayList<>();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                pList.add(fromCsvLine(line)) ;
+                Person p1 = fromCsvLine(line);
+                String fullName = p1.firstName + " " + p1.lastName;
+                if (names.contains(fullName)) {
+                    throw new AmbiguousPersonException("Osoba o takich danych personalnych istnieje");
+                }
+                else {
+                    names.add(fullName);
+                }
+                pList.add(p1);
             }
-        } catch (IOException | NegativeLifespanException e) {
+        } catch (IOException | NegativeLifespanException | AmbiguousPersonException e) {
             System.err.println(e.getMessage());
         }
 //        System.out.println(lines.getFirst());

@@ -43,7 +43,7 @@ public class Main {
         String key1= p1.getFirstName() + " " +  p1.getLastName();
 //        System.out.println(family.get(key1));
 
-        System.out.println(Person.fromCsvLine("Marek Kowalski,15.05.1899,25.06.1890,,"));
-//        System.out.println(Person.fromCsv("resources/family.csv"));
+//        System.out.println(Person.fromCsvLine("Marek Kowalski,15.05.1899,25.06.1890,,"));
+        System.out.println(Person.fromCsv("resources/family.csv"));
     }
 }
