@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NegativeLifespanException {
 
         List<Person> list = new ArrayList<>();
         Person p1 = new Person(
@@ -41,10 +41,9 @@ public class Main {
         family.add(p1, p2, p2, p3);
 //        family.add(list);
         String key1= p1.getFirstName() + " " +  p1.getLastName();
-        System.out.println(family.get(key1));
+//        System.out.println(family.get(key1));
 
-        System.out.println("\n\n\n");
-//        System.out.println(Person.fromCsvLine("Anna Dąbrowska,07.02.1930,22.12.1991,Ewa Kowalska,Marek Kowalski"));
-        System.out.println(Person.fromCsv("resources/family.csv"));
+        System.out.println(Person.fromCsvLine("Marek Kowalski,15.05.1899,25.06.1890,,"));
+//        System.out.println(Person.fromCsv("resources/family.csv"));
     }
 }

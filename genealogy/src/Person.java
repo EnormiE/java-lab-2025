@@ -97,7 +97,7 @@ public class Person implements Comparable<Person> {
                 '}';
     }
 
-    public static Person fromCsvLine(String line) {
+    public static Person fromCsvLine(String line) throws NegativeLifespanException {
 //        "Anna Dąbrowska,07.02.1930,22.12.1991,Ewa Kowalska,Marek Kowalski"
         String[] lineParts = line.split(",");
         String firstName = lineParts[0].split(" ")[0];
@@ -105,8 +105,16 @@ public class Person implements Comparable<Person> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate birthDate = LocalDate.parse(lineParts[1],formatter);
         LocalDate deathDate = null;
-        if (!lineParts[2].isEmpty()) {
-            deathDate = LocalDate.parse(line.split(",")[2], formatter);
+        try {
+            if (!lineParts[2].isEmpty()) {
+                deathDate = LocalDate.parse(line.split(",")[2], formatter);
+                if(deathDate.isBefore(birthDate)) {
+                    throw new NegativeLifespanException("osoba " + firstName + " " + lastName + " ma negatywny wiek");
+                }
+            }
+        }
+        catch (NegativeLifespanException e) {
+            System.err.println(e.getMessage());
         }
         return new Person(firstName, lastName, birthDate, deathDate);
     }
@@ -120,8 +128,8 @@ public class Person implements Comparable<Person> {
             while ((line = reader.readLine()) != null) {
                 pList.add(fromCsvLine(line)) ;
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        } catch (IOException | NegativeLifespanException e) {
+            System.err.println(e.getMessage());
         }
 //        System.out.println(lines.getFirst());
 
