@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -114,16 +111,18 @@ public class Person implements Comparable<Person> {
         return new Person(firstName, lastName, birthDate, deathDate);
     }
 
-    public static List<Person> fromCsv(String fileName) throws IOException {
+    public static List<Person> fromCsv(String fileName) {
         List<Person> pList = new ArrayList<>();
-
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        List<String> lines = new ArrayList<>();
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            pList.add(fromCsvLine(line)) ;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            List<String> lines = new ArrayList<>();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                pList.add(fromCsvLine(line)) ;
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
 //        System.out.println(lines.getFirst());
 
         return pList;

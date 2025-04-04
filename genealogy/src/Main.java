@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         List<Person> list = new ArrayList<>();
         Person p1 = new Person(
