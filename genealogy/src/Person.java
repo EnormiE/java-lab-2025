@@ -1,27 +1,35 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Person implements Comparable<Person> {
     private String firstName, lastName;
     private LocalDate birthDate;
+    private LocalDate deathDate;
     private Set<Person> children;
 
-    public Person(String firstName, String lastName, LocalDate birthDate, Set<Person> children) {
+    public Person(String firstName, String lastName, LocalDate birthDate, LocalDate deathDate, Set<Person> children) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.deathDate = deathDate;
         this.children = children;
     }
 
-    public Person(String firstName, String lastName, LocalDate birthDate) {
+    public Person(String firstName, String lastName, LocalDate birthDate, LocalDate deathDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.deathDate = deathDate;
         this.children = new HashSet<>();
     }
 
     public LocalDate getBirthDate() {
         return birthDate;
+    }
+
+    public LocalDate getdeathDate() {
+        return deathDate;
     }
 
     public String getFirstName() {
@@ -83,7 +91,21 @@ public class Person implements Comparable<Person> {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
+                ", deathDate=" + deathDate +
                 ", children=" + children +
                 '}';
+    }
+
+    public static Person fromCsvLine(String line) {
+//        "Marek Kowalski,15.05.1899,25.06.1957,,"
+        String firstName = line.split(",")[0].split(" ")[0];
+        String lastName = line.split(",")[0].split(" ")[1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate birthDate = LocalDate.parse(line.split(",")[1], formatter);
+        LocalDate deathDate = null;
+        if (!line.split(",")[2].isEmpty()) {
+            deathDate = LocalDate.parse(line.split(",")[2], formatter);
+        }
+        return new Person(firstName, lastName, birthDate, deathDate);
     }
 }

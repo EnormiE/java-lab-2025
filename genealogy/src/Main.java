@@ -12,16 +12,19 @@ public class Main {
                 "Tobiasz",
                 "Rzecki",
                 LocalDate.of(2001, 1, 1),
+                LocalDate.of(2005, 1, 1),
                 new HashSet<>());
         Person p2 = new Person(
                 "Mateusz",
                 "Geok",
                 LocalDate.of(2002, 2, 2),
+                LocalDate.of(2003, 2, 2),
                 new HashSet<>());
         Person p3 = new Person(
                 "Alicja",
                 "Nowak",
                 LocalDate.of(2003, 3, 3),
+                LocalDate.of(2004, 3, 3),
                 new HashSet<>());
         list.add(p1);
         list.add(p2);
@@ -39,8 +42,8 @@ public class Main {
         String key1= p1.getFirstName() + " " +  p1.getLastName();
         System.out.println(family.get(key1));
 
-//        System.out.println(family);
-
+        System.out.println("\n\n\n");
+        System.out.println(Person.fromCsvLine("Marek Kowalski,15.05.1899,25.06.1957,,"));
 
     }
 }
