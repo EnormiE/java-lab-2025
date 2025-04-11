@@ -201,8 +201,6 @@ public class Person implements Comparable<Person>, Serializable{
         } catch (IOException | NegativeLifespanException | AmbiguousPersonException e) {
             System.err.println(e.getMessage());
         }
-//        System.out.println(lines.getFirst());
-
         return peopleList;
     }
 
@@ -296,6 +294,13 @@ public class Person implements Comparable<Person>, Serializable{
             }
         }
         return filteredList;
+    }
+
+    public static List<Person> sortListByBirthDate(List<Person> list) {
+        List<Person> sortedList = new ArrayList<>(list);
+        Collections.sort(sortedList);
+//        Collections.sort(list, Collections.reverseOrder());
+        return sortedList;
     }
 
 }
