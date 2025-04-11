@@ -44,17 +44,19 @@ public class Main {
 //        System.out.println(family.get(key1));
 
 //        System.out.println(Person.fromCsvLine("Marek Kowalski,15.05.1899,25.06.1890,,"));
-        System.out.println(Person.fromCsv("resources/family.csv"));
-// L06_Z07
-        System.out.println("\n--- Zadanie 7: Testowanie zapisu i odczytu binarnego ---");
-        List<Person> peopleToBinary = new ArrayList<>();
-        peopleToBinary.add(new Person("Karol", "Nowak", LocalDate.of(2000, 1, 1), null));
-        peopleToBinary.add(new Person("Zofia", "Kowalska", LocalDate.of(1985, 5, 10), LocalDate.of(2022, 12, 25)));
+//        System.out.println(Person.fromCsv("resources/family.csv"));
+//// L06_Z07
+//        System.out.println("\n--- Zadanie 7: Testowanie zapisu i odczytu binarnego ---");
+//        List<Person> peopleToBinary = new ArrayList<>();
+//        peopleToBinary.add(new Person("Karol", "Nowak", LocalDate.of(2000, 1, 1), null));
+//        peopleToBinary.add(new Person("Zofia", "Kowalska", LocalDate.of(1985, 5, 10), LocalDate.of(2022, 12, 25)));
+//
+//        Person.toBinaryFile(peopleToBinary, "people.bin");
+//        List<Person> readPeopleBinary = Person.fromBinaryFile("people.bin");
+//        for (Person person : readPeopleBinary) {
+//            System.out.println(person);
+//        }
 
-        Person.toBinaryFile(peopleToBinary, "people.bin");
-        List<Person> readPeopleBinary = Person.fromBinaryFile("people.bin");
-        for (Person person : readPeopleBinary) {
-            System.out.println(person);
-        }
+        PlantUMLRunner.generateScheme("@startuml\nAlice -> Bob: Authentication Request\n@enduml", "new", "new_file");
     }
 }
