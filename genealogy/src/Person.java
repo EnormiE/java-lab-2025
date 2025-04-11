@@ -50,8 +50,7 @@ public class Person implements Comparable<Person> {
 
     public boolean adopt(Person child) {
         if (child != this) {
-            children.add(child);
-            return true;
+            return this.children.add(child);
         }
         return false;
     }
@@ -120,28 +119,44 @@ public class Person implements Comparable<Person> {
     }
 
     public static List<Person> fromCsv(String fileName) {
-        List<Person> pList = new ArrayList<>();
+        List<Person> peopleList = new ArrayList<>();
         Set<String> names = new HashSet<>();
+        Map<String, Person> peopleMap = new HashMap<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             List<String> lines = new ArrayList<>();
-            String line = null;
+            String line = "";
+            String[] lineParts = line.split(",");
             while ((line = reader.readLine()) != null) {
-                Person p1 = fromCsvLine(line);
-                String fullName = p1.firstName + " " + p1.lastName;
+                Person person = fromCsvLine(line);
+                String fullName = person.firstName + " " + person.lastName;
                 if (names.contains(fullName)) {
                     throw new AmbiguousPersonException("Osoba o takich danych personalnych istnieje");
                 }
                 else {
                     names.add(fullName);
+                    peopleMap.put(fullName, person);
+                    peopleList.add(person);
+                    lineParts = line.split(",");
+                    if (lineParts.length > 3) {
+                        Person parent1 = peopleMap.get(lineParts[3]);
+                        if (parent1 != null) {
+                            parent1.adopt(person);
+                        }
+                    }
+                    if (lineParts.length > 4) {
+                        Person parent2 = peopleMap.get(lineParts[4]);
+                        if (parent2 != null) {
+                            parent2.adopt(person);
+                        }
+                    }
                 }
-                pList.add(p1);
             }
         } catch (IOException | NegativeLifespanException | AmbiguousPersonException e) {
             System.err.println(e.getMessage());
         }
 //        System.out.println(lines.getFirst());
 
-        return pList;
+        return peopleList;
     }
 }
