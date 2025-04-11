@@ -48,6 +48,10 @@ public class Person implements Comparable<Person> {
         return list;
     }
 
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
     public boolean adopt(Person child) {
         if (child != this) {
             return this.children.add(child);
@@ -96,6 +100,15 @@ public class Person implements Comparable<Person> {
                 '}';
     }
 
+    public static void checkParentingAge(Person parent, Person child) throws ParentingAgeException {
+        if (parent.getBirthDate().plusYears(15).isAfter(child.getBirthDate())) {
+            throw new ParentingAgeException("Rodzic jest młodszy niz 15 lat");
+        }
+        if (parent.getDeathDate() != null && parent.getDeathDate().isBefore(child.getBirthDate())) {
+            throw new ParentingAgeException("Rodzic nie żyje w chwili urodzin dziecka");
+        }
+    }
+
     public static Person fromCsvLine(String line) throws NegativeLifespanException {
 //        "Anna Dąbrowska,07.02.1930,22.12.1991,Ewa Kowalska,Marek Kowalski"
         String[] lineParts = line.split(",");
@@ -141,13 +154,35 @@ public class Person implements Comparable<Person> {
                     if (lineParts.length > 3) {
                         Person parent1 = peopleMap.get(lineParts[3]);
                         if (parent1 != null) {
-                            parent1.adopt(person);
+                            try {
+                                checkParentingAge(parent1, person);
+                                parent1.adopt(person);
+                            } catch (ParentingAgeException e) {
+                                System.out.println("Błąd " + e.getMessage());
+                                System.out.println("Czy na pewno dodać?");
+                                Scanner scanner = new Scanner(System.in);
+                                String input = scanner.nextLine();
+                                if (input.equalsIgnoreCase("y")) {
+                                    parent1.adopt(person);
+                                }
+                            }
                         }
                     }
                     if (lineParts.length > 4) {
                         Person parent2 = peopleMap.get(lineParts[4]);
                         if (parent2 != null) {
-                            parent2.adopt(person);
+                            try {
+                                checkParentingAge(parent2, person);
+                                parent2.adopt(person);
+                            } catch (ParentingAgeException e) {
+                                System.out.println("Błąd " + e.getMessage());
+                                System.out.println("Czy na pewno dodać?");
+                                Scanner scanner = new Scanner(System.in);
+                                String input = scanner.nextLine();
+                                if (input.equalsIgnoreCase("y")) {
+                                    parent2.adopt(person);
+                                }
+                            }
                         }
                     }
                 }
