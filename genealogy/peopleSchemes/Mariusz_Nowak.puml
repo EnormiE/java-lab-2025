@@ -1,0 +1,16 @@
+@startuml
+object p1#Yellow{
+Mariusz_Nowak
+}
+object p2#Yellow{
+Tobiasz_Nowak
+}
+
+p1 -> p2 : dziecko
+object p3#Yellow{
+Alicja_Nowak
+}
+
+p1 -> p3 : dziecko
+
+@enduml

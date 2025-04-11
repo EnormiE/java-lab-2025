@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) throws NegativeLifespanException {
@@ -72,14 +73,37 @@ public class Main {
 //        }
 
 //        PlantUMLRunner.generateScheme("@startuml\nAlice -> Bob: Authentication Request\n@enduml", "new", "new_file");
-//        p1.adopt(p3);
-//        p2.adopt(p3);
+        p1.adopt(p3);
+        p2.adopt(p3);
 //        p2.toPlantUML();
 //        p1.toPlantUML();
 //        Person.listToPlantUML(List.of(p1, p2, p3, p4));
 //        System.out.println(Person.filterListBySubstr(List.of(p1, p2, p3, p4), "Bób"));
 //        System.out.println(Person.sortListByBirthDate(List.of(p1, p2, p3, p4)));
-        System.out.println(Person.getDeadFromList(List.of(p1, p2, p3, p4, p5)));
-        System.out.println(Person.getOldestAlive(List.of(p1, p2, p3, p4, p5)));
+//        System.out.println(Person.getDeadFromList(List.of(p1, p2, p3, p4, p5)));
+//        System.out.println(Person.getOldestAlive(List.of(p1, p2, p3, p4, p5)));
+
+        Function<String, String> yellow = s -> {
+            int index = s.indexOf("{\n");
+            if (index == -1) { // s.indexOf returns -1 if no occurence found
+                return s;
+            }
+            return s.substring(0, index) + "#Yellow" + s.substring(index);
+        };
+//        Function<String, String> yellow = s -> {
+//            String insertion = "#Yellow";
+//            String newS = s;
+//            int prevIndex = 0;
+//            int index = newS.indexOf("{\n", prevIndex);
+//            while (index > -1) { // s.indexOf returns -1 if no occurence found
+//                newS = newS.substring(0, index) + insertion + newS.substring(index);
+//                prevIndex = index + insertion.length() + 1;
+//                index = newS.indexOf("{\n", prevIndex);
+//            }
+//            return newS;
+//        };
+        Function<String, String> nothing = s -> s;
+        p3.toPlantUML(yellow);
+        p2.toPlantUML(nothing);
     }
 }

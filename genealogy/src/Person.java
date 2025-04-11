@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Function;
 
 public class Person implements Comparable<Person>, Serializable{
     private String firstName, lastName;
@@ -229,16 +230,20 @@ public class Person implements Comparable<Person>, Serializable{
         return new ArrayList<>();
     }
 
-    public void toPlantUML() {
+    public void toPlantUML(Function<String, String> postProcess) {
         String data = "";
         String name = getFirstName() + "_" + getLastName();
         data += "@startuml\n";
         int iterator = 0;
-        data += "object p" + ++iterator + "{\n" + name + "\n}\n";
+        String objectLine1 = "object p" + ++iterator + "{\n" + name + "\n}\n";
+//        data += "object p" + ++iterator + "{\n" + name + "\n}\n";
+        data += postProcess.apply(objectLine1);
 
         if (!getParents().isEmpty()) {
             for (Person parent : getParents()) {
-                data += "object p" + ++iterator + "{\n" + parent.getFirstName() + "_" + parent.getLastName() + "\n}\n";
+                String objectLine2 = "object p" + ++iterator + "{\n" + parent.getFirstName() + "_" + parent.getLastName() + "\n}\n";
+//                data += "object p" + ++iterator + "{\n" + parent.getFirstName() + "_" + parent.getLastName() + "\n}\n";
+                data += postProcess.apply(objectLine2);
                 data += "\np1 -> p" + iterator + " : dziecko\n";
             }
         }
@@ -250,7 +255,9 @@ public class Person implements Comparable<Person>, Serializable{
             data += ": dziecko\n";
         }
         data += "\n@enduml";
+//        postProcess.apply(data);
         PlantUMLRunner.generateScheme(data, "peopleSchemes", name);
+//        PlantUMLRunner.generateScheme(postProcess.apply(data), "peopleSchemes", name);
     }
 
     public static void listToPlantUML(List<Person> peopleList) {
