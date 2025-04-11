@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) throws NegativeLifespanException {
@@ -103,7 +104,11 @@ public class Main {
 //            return newS;
 //        };
         Function<String, String> nothing = s -> s;
-        p3.toPlantUML(yellow);
-        p2.toPlantUML(nothing);
+
+        Predicate<Person> isDead = p -> (Person.getDeadFromList(List.of(p1, p2, p3, p4, p5))).contains(p);
+        Predicate<Person> isOldestLiving = p -> p.equals(Person.getOldestAlive(List.of(p1, p2, p3, p4, p5)));
+        p3.toPlantUML(yellow, isOldestLiving);
+        p4.toPlantUML(yellow, isOldestLiving);
+        p3.toPlantUML(nothing, isDead);
     }
 }

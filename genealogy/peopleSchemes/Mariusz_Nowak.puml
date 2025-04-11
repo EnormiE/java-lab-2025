@@ -1,13 +1,13 @@
 @startuml
-object p1#Yellow{
+object p1{
 Mariusz_Nowak
 }
-object p2#Yellow{
+object p2{
 Tobiasz_Nowak
 }
 
 p1 -> p2 : dziecko
-object p3#Yellow{
+object p3{
 Alicja_Nowak
 }
 

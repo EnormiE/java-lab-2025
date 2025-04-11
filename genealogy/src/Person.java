@@ -4,6 +4,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Person implements Comparable<Person>, Serializable{
     private String firstName, lastName;
@@ -230,20 +231,20 @@ public class Person implements Comparable<Person>, Serializable{
         return new ArrayList<>();
     }
 
-    public void toPlantUML(Function<String, String> postProcess) {
+    public void toPlantUML(Function<String, String> postProcess, Predicate<Person> condition) {
         String data = "";
         String name = getFirstName() + "_" + getLastName();
         data += "@startuml\n";
         int iterator = 0;
         String objectLine1 = "object p" + ++iterator + "{\n" + name + "\n}\n";
 //        data += "object p" + ++iterator + "{\n" + name + "\n}\n";
-        data += postProcess.apply(objectLine1);
+        data += condition.test(this) ? postProcess.apply(objectLine1) : objectLine1;
 
         if (!getParents().isEmpty()) {
             for (Person parent : getParents()) {
                 String objectLine2 = "object p" + ++iterator + "{\n" + parent.getFirstName() + "_" + parent.getLastName() + "\n}\n";
 //                data += "object p" + ++iterator + "{\n" + parent.getFirstName() + "_" + parent.getLastName() + "\n}\n";
-                data += postProcess.apply(objectLine2);
+                data += condition.test(this) ? postProcess.apply(objectLine2) : objectLine2;
                 data += "\np1 -> p" + iterator + " : dziecko\n";
             }
         }
