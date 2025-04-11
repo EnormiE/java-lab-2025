@@ -231,14 +231,13 @@ public class Person implements Comparable<Person>, Serializable{
     }
 
     public void toPlantUML() {
-//        PlantUMLRunner.generateScheme();
         String data = "";
         String name = getFirstName() + "_" + getLastName();
         data += "@startuml\n";
         int iterator = 0;
         data += "object p" + ++iterator + "{\n" + name + "\n}\n";
 
-        if (getParents().size() > 0) {
+        if (!getParents().isEmpty()) {
             for (Person parent : getParents()) {
                 data += "object p" + ++iterator + "{\n" + parent.getFirstName() + "_" + parent.getLastName() + "\n}\n";
                 data += "\np1 -> p" + iterator + " : dziecko\n";
@@ -251,25 +250,41 @@ public class Person implements Comparable<Person>, Serializable{
             data += "p2";
             data += ": dziecko\n";
         }
-//        "@startuml\n" +
-//                "object p1 {\n" +
-//                " Bar Dan\n" +
-//                "}\n" +
-//                "object p2 {\n" +
-//                " Jan Ko\n" +
-//                "}\n" +
-//                "\n" +
-//                "p1 --> p2 : dziecko\n" +
-//                "\n" +
-//                "object p3 {\n" +
-//                " Mariusz D\n" +
-//                "}\n" +
-//                "p1 --> p3 : dziecko\n" +
-//                "@enduml"
-//        data += "->";
-//        data += name;
-//        data += ": dziecko";
         data += "\n@enduml";
         PlantUMLRunner.generateScheme(data, "peopleSchemes", name);
     }
+
+    public static void listToPlantUML(List<Person> peopleList) {
+        String data = "@startuml\n";
+        Map<Person, Integer> peopleMap = new HashMap<>();
+        int iterator = 0;
+
+        for (Person person : peopleList) {
+            peopleMap.put(person, ++iterator);
+        }
+
+        for (int i = 1; i <= peopleList.size(); ++i) {
+            data += "object p" + i + "{\n" + peopleList.get(i-1).getFirstName() + " " + peopleList.get(i-1).getLastName() + "\n}\n";
+        }
+
+        for (int i = 1; i <= peopleList.size(); ++i) {
+            if (!peopleList.get(i-1).getParents().isEmpty()) {
+                for (Person parent : peopleList.get(i-1).getParents()){
+                    data += "p" + i + " --> " + "p" + peopleMap.get(parent) + " : dziecko\n";
+                }
+                }
+            else { // zajmij się dziećmi ulicy
+                if (peopleList.size() == iterator) {
+                    data += "object p" + ++iterator + "{\nulica\n}\n";
+//                    data += "p" + i + " --> " + "p" + peopleMap.get(parent) + " : dziecko\n";
+                }
+                data += "p" + i + " --> " + "p" + iterator + " : dziecko\n";
+            }
+        }
+
+        data += "@enduml";
+
+        PlantUMLRunner.generateScheme(data, "peopleSchemes", "listOfPeople");
+    }
+
 }

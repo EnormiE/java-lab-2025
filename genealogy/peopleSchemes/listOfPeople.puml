@@ -1,0 +1,22 @@
+@startuml
+object p1{
+Tobiasz Nowak
+}
+object p2{
+Alicja Nowak
+}
+object p3{
+Mariusz Nowak
+}
+object p4{
+Agata Bób
+}
+object p5{
+ulica
+}
+p1 --> p5 : dziecko
+p2 --> p5 : dziecko
+p3 --> p2 : dziecko
+p3 --> p1 : dziecko
+p4 --> p5 : dziecko
+@enduml

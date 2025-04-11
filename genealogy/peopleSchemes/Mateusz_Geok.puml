@@ -3,14 +3,8 @@ object p1{
 Mateusz_Geok
 }
 object p2{
-Tobiasz_Rzecki
+ulica
 }
-
-p1 -> p2 : dziecko
-object p3{
-Alicja_Nowak
-}
-
-p1 -> p3 : dziecko
+p1 -> p2: dziecko
 
 @enduml
