@@ -14,18 +14,21 @@ public class Main {
                 "Rzecki",
                 LocalDate.of(2001, 1, 1),
                 LocalDate.of(2005, 1, 1),
+                new HashSet<>(),
                 new HashSet<>());
         Person p2 = new Person(
                 "Mateusz",
                 "Geok",
                 LocalDate.of(2002, 2, 2),
                 LocalDate.of(2003, 2, 2),
+                new HashSet<>(),
                 new HashSet<>());
         Person p3 = new Person(
                 "Alicja",
                 "Nowak",
                 LocalDate.of(2003, 3, 3),
                 LocalDate.of(2004, 3, 3),
+                new HashSet<>(),
                 new HashSet<>());
         list.add(p1);
         list.add(p2);
@@ -35,7 +38,7 @@ public class Main {
 //        System.out.println(list);
 
         p1.adopt(p2);
-        p1.adopt(p3);
+        p3.adopt(p2);
         Family family = new Family();
 
         family.add(p1, p2, p2, p3);
@@ -57,6 +60,8 @@ public class Main {
 //            System.out.println(person);
 //        }
 
-        PlantUMLRunner.generateScheme("@startuml\nAlice -> Bob: Authentication Request\n@enduml", "new", "new_file");
+//        PlantUMLRunner.generateScheme("@startuml\nAlice -> Bob: Authentication Request\n@enduml", "new", "new_file");
+        p2.toPlantUML();
+        p1.toPlantUML();
     }
 }

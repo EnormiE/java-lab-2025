@@ -1,0 +1,10 @@
+@startuml
+object p1{
+Tobiasz_Rzecki
+}
+object p2{
+ulica
+}
+p1 -> p2: dziecko
+
+@enduml

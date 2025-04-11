@@ -8,13 +8,15 @@ public class Person implements Comparable<Person>, Serializable{
     private LocalDate birthDate;
     private LocalDate deathDate;
     private Set<Person> children;
+    private Set<Person> parents;
 
-    public Person(String firstName, String lastName, LocalDate birthDate, LocalDate deathDate, Set<Person> children) {
+    public Person(String firstName, String lastName, LocalDate birthDate, LocalDate deathDate, Set<Person> children, Set<Person> parents) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
         this.children = children;
+        this.parents = parents;
     }
 
     public Person(String firstName, String lastName, LocalDate birthDate, LocalDate deathDate) {
@@ -23,6 +25,7 @@ public class Person implements Comparable<Person>, Serializable{
         this.birthDate = birthDate;
         this.deathDate = deathDate;
         this.children = new HashSet<>();
+        this.parents = new HashSet<>();
     }
 
     public LocalDate getBirthDate() {
@@ -48,13 +51,21 @@ public class Person implements Comparable<Person>, Serializable{
         return list;
     }
 
+    public Set<Person> getParents() {
+        return parents;
+    }
+
     public LocalDate getDeathDate() {
         return deathDate;
     }
 
     public boolean adopt(Person child) {
         if (child != this) {
-            return this.children.add(child);
+            boolean adopted = this.children.add(child);
+            if (adopted) {
+                child.getParents().add(this);
+            }
+            return adopted;
         }
         return false;
     }
@@ -217,5 +228,48 @@ public class Person implements Comparable<Person>, Serializable{
             System.err.println("Błąd podczas odczytu z pliku binarnego: " + e);
         }
         return new ArrayList<>();
+    }
+
+    public void toPlantUML() {
+//        PlantUMLRunner.generateScheme();
+        String data = "";
+        String name = getFirstName() + "_" + getLastName();
+        data += "@startuml\n";
+        int iterator = 0;
+        data += "object p" + ++iterator + "{\n" + name + "\n}\n";
+
+        if (getParents().size() > 0) {
+            for (Person parent : getParents()) {
+                data += "object p" + ++iterator + "{\n" + parent.getFirstName() + "_" + parent.getLastName() + "\n}\n";
+                data += "\np1 -> p" + iterator + " : dziecko\n";
+            }
+        }
+        else {
+            data += "object p2{\nulica\n}\n";
+            data += "p1";
+            data += " -> ";
+            data += "p2";
+            data += ": dziecko\n";
+        }
+//        "@startuml\n" +
+//                "object p1 {\n" +
+//                " Bar Dan\n" +
+//                "}\n" +
+//                "object p2 {\n" +
+//                " Jan Ko\n" +
+//                "}\n" +
+//                "\n" +
+//                "p1 --> p2 : dziecko\n" +
+//                "\n" +
+//                "object p3 {\n" +
+//                " Mariusz D\n" +
+//                "}\n" +
+//                "p1 --> p3 : dziecko\n" +
+//                "@enduml"
+//        data += "->";
+//        data += name;
+//        data += ": dziecko";
+        data += "\n@enduml";
+        PlantUMLRunner.generateScheme(data, "peopleSchemes", name);
     }
 }
