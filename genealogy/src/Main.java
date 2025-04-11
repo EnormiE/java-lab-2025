@@ -13,28 +13,28 @@ public class Main {
                 "Tobiasz",
                 "Nowak",
                 LocalDate.of(2001, 1, 1),
-                LocalDate.of(2005, 1, 1),
+                LocalDate.of(2002, 1, 1),
                 new HashSet<>(),
                 new HashSet<>());
         Person p2 = new Person(
                 "Alicja",
                 "Nowak",
                 LocalDate.of(2002, 2, 2),
-                LocalDate.of(2003, 2, 2),
+                LocalDate.of(2011, 2, 2),
                 new HashSet<>(),
                 new HashSet<>());
         Person p3 = new Person(
                 "Mariusz",
                 "Nowak",
                 LocalDate.of(2003, 3, 3),
-                LocalDate.of(2004, 3, 3),
+                LocalDate.of(2020, 3, 3),
                 new HashSet<>(),
                 new HashSet<>());
         Person p4 = new Person(
                 "Agata",
                 "Bób",
                 LocalDate.of(2004, 4, 4),
-                LocalDate.of(2005, 4, 4),
+                null,
                 new HashSet<>(),
                 new HashSet<>());
         list.add(p1);
@@ -65,12 +65,13 @@ public class Main {
 //        }
 
 //        PlantUMLRunner.generateScheme("@startuml\nAlice -> Bob: Authentication Request\n@enduml", "new", "new_file");
-        p1.adopt(p3);
-        p2.adopt(p3);
+//        p1.adopt(p3);
+//        p2.adopt(p3);
 //        p2.toPlantUML();
 //        p1.toPlantUML();
-        Person.listToPlantUML(List.of(p1, p2, p3, p4));
-        System.out.println(Person.filterListBySubstr(List.of(p1, p2, p3, p4), "Bób"));
-        System.out.println(Person.sortListByBirthDate(List.of(p1, p2, p3, p4)));
+//        Person.listToPlantUML(List.of(p1, p2, p3, p4));
+//        System.out.println(Person.filterListBySubstr(List.of(p1, p2, p3, p4), "Bób"));
+//        System.out.println(Person.sortListByBirthDate(List.of(p1, p2, p3, p4)));
+        System.out.println(Person.getDeadFromList(List.of(p1, p2, p3, p4)));
     }
 }

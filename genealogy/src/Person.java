@@ -1,5 +1,6 @@
 import java.io.*;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -301,6 +302,27 @@ public class Person implements Comparable<Person>, Serializable{
         Collections.sort(sortedList);
 //        Collections.sort(list, Collections.reverseOrder());
         return sortedList;
+    }
+
+    public int getLifespan() {
+        Period period = Period.between(this.birthDate, this.deathDate);
+        return (period.getYears() * 365) + (period.getMonths() * 30) + period.getDays();
+    }
+
+    public int compareByLifeSpan(Person p) {
+        return Integer.compare(this.getLifespan(), p.getLifespan());
+    }
+
+    public static List<Person> getDeadFromList(List<Person> list) {
+        List<Person> filteredList = new ArrayList<>();
+        for (Person person : list) {
+            if (person.getDeathDate() != null) {
+                filteredList.add(person);
+            }
+        }
+        List<Person> filteredSortedList = new ArrayList<>(filteredList);
+        filteredSortedList.reversed().sort(Person::compareByLifeSpan);
+        return filteredSortedList;
     }
 
 }
