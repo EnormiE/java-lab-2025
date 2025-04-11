@@ -287,4 +287,15 @@ public class Person implements Comparable<Person>, Serializable{
         PlantUMLRunner.generateScheme(data, "peopleSchemes", "listOfPeople");
     }
 
+    public static List<Person> filterListBySubstr(List<Person> list, String substr) {
+        List<Person> filteredList = new ArrayList<>();
+        for (Person person : list) {
+            String name = person.getFirstName() + " " + person.getLastName();
+            if (name.contains(substr)) {
+                filteredList.add(person);
+            }
+        }
+        return filteredList;
+    }
+
 }

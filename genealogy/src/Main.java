@@ -70,5 +70,6 @@ public class Main {
 //        p2.toPlantUML();
 //        p1.toPlantUML();
         Person.listToPlantUML(List.of(p1, p2, p3, p4));
+        System.out.println(Person.filterListBySubstr(List.of(p1, p2, p3, p4), "Bób"));
     }
 }
