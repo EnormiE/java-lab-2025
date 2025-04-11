@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Person implements Comparable<Person> {
+public class Person implements Comparable<Person>, Serializable{
     private String firstName, lastName;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -193,5 +193,29 @@ public class Person implements Comparable<Person> {
 //        System.out.println(lines.getFirst());
 
         return peopleList;
+    }
+
+    public static void toBinaryFile(List<Person> people, String path) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
+            oos.writeObject(people);
+            System.out.println("Zapisano osoby do pliku binarnego: " + path);
+        } catch (IOException e) {
+            System.err.println("Błąd podczas zapisu do pliku binarnego: " + e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<Person> fromBinaryFile(String path) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
+            Object obj = ois.readObject();
+            if (obj instanceof List<?>) {
+                return (List<Person>) obj;
+            } else {
+                System.out.println("Plik nie zawiera listy osób.");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Błąd podczas odczytu z pliku binarnego: " + e);
+        }
+        return new ArrayList<>();
     }
 }
