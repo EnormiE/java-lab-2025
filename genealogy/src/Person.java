@@ -325,4 +325,16 @@ public class Person implements Comparable<Person>, Serializable{
         return filteredSortedList;
     }
 
+    public static Person getOldestAlive(List<Person> list) {
+        List<Person> filteredList = new ArrayList<>();
+        for (Person person : list) {
+            if (person.getDeathDate() == null) {
+                filteredList.add(person);
+            }
+        }
+        List<Person> filteredSortedList = new ArrayList<>(filteredList);
+        filteredSortedList.sort(Person::compareTo);
+        return filteredSortedList.getFirst();
+    }
+
 }

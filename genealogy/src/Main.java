@@ -8,7 +8,7 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) throws NegativeLifespanException {
 
-        List<Person> list = new ArrayList<>();
+//        List<Person> list = new ArrayList<>();
         Person p1 = new Person(
                 "Tobiasz",
                 "Nowak",
@@ -37,17 +37,24 @@ public class Main {
                 null,
                 new HashSet<>(),
                 new HashSet<>());
-        list.add(p1);
-        list.add(p2);
-        list.add(p3);
+        Person p5 = new Person(
+                "Tomas",
+                "Dłonias",
+                LocalDate.of(2005, 5, 5),
+                null,
+                new HashSet<>(),
+                new HashSet<>());
+//        list.add(p1);
+//        list.add(p2);
+//        list.add(p3);
 //        System.out.println("p1 adoptuje p1: " + p1.adopt(p1));
 //        System.out.println("p1 adoptuje p2: " + p1.adopt(p2));
 //        System.out.println(list);
-        Family family = new Family();
+//        Family family = new Family();
 
-        family.add(p1, p2, p2, p3);
+//        family.add(p1, p2, p2, p3);
 //        family.add(list);
-        String key1= p1.getFirstName() + " " +  p1.getLastName();
+//        String key1= p1.getFirstName() + " " +  p1.getLastName();
 //        System.out.println(family.get(key1));
 
 //        System.out.println(Person.fromCsvLine("Marek Kowalski,15.05.1899,25.06.1890,,"));
@@ -72,6 +79,7 @@ public class Main {
 //        Person.listToPlantUML(List.of(p1, p2, p3, p4));
 //        System.out.println(Person.filterListBySubstr(List.of(p1, p2, p3, p4), "Bób"));
 //        System.out.println(Person.sortListByBirthDate(List.of(p1, p2, p3, p4)));
-        System.out.println(Person.getDeadFromList(List.of(p1, p2, p3, p4)));
+        System.out.println(Person.getDeadFromList(List.of(p1, p2, p3, p4, p5)));
+        System.out.println(Person.getOldestAlive(List.of(p1, p2, p3, p4, p5)));
     }
 }
