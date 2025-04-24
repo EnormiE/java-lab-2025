@@ -11,10 +11,17 @@ public class Main {
         });
 
         Ellipse ellipse = new Ellipse(new Vec2(500, 700), 400, 100);
+        SolidFillShapeDecorator filledPentagon = new SolidFillShapeDecorator(pentagon, "red");
+        StrokeShapeDecorator strokeFilledPentagon = new StrokeShapeDecorator(filledPentagon, "blue", 5.0);
+
+        SolidFillShapeDecorator filledEllipse = new SolidFillShapeDecorator(ellipse, "blue");
+        StrokeShapeDecorator strokeFilledEllipse = new StrokeShapeDecorator(filledEllipse, "red", 5.0);
+
 
         SvgScene scene = new SvgScene();
-        scene.addShape(pentagon);
-        scene.addShape(ellipse);
+        scene.addShape(strokeFilledPentagon);
+        scene.addShape(strokeFilledEllipse);
         scene.save("result.svg");
+
     }
 }
