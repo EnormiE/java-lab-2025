@@ -10,7 +10,7 @@ public class StrokeShapeDecorator extends ShapeDecorator {
 
     @Override
     public String toSvg(String param){
-        String formattedAttributes = String.format("stroke=\"%s\" stroke-width=\"%f\" %s", this.color, this.width, param);
+        String formattedAttributes = String.format("stroke=\"%s\" stroke-width=\"%s\" %s", this.color, this.width, param);
         return this.decoratedShape.toSvg(formattedAttributes);
     }
 
