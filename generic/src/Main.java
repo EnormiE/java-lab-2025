@@ -7,5 +7,13 @@ public class Main {
         list1.addHead("trojmiasto");
 
         System.out.println(list1);
+        System.out.println(list1.size());
+
+        list1.add("mobbyn");
+
+        System.out.println(list1);
+        System.out.println(list1.size());
+
+        System.out.println(list1.get(1));
     }
 }

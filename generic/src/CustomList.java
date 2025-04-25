@@ -1,4 +1,6 @@
-public class CustomList <T> {
+import java.util.AbstractList;
+
+public class CustomList <T> extends AbstractList <T> {
     static class Node<T> {
         T value;
         Node<T> next;
@@ -13,6 +15,36 @@ public class CustomList <T> {
     public CustomList() {
         this.head = null;
         this.tail = null;
+    }
+
+    public boolean add(T t) {
+        addTail(t);
+        return true;
+    }
+
+    @Override
+    public int size() {
+        int size = 0;
+        Node<T> currentNode = this.head;
+        while (currentNode != null){
+            size += 1;
+            currentNode = currentNode.next;
+        }
+        return size;
+    }
+
+    @Override
+    public T get(int index) {
+        int id = 0;
+        Node<T> currentNode = this.head;
+        while (currentNode != null){
+            if (index == id) {
+                return (T) currentNode.value;
+            }
+            id += 1;
+            currentNode = currentNode.next;
+        }
+        throw new IndexOutOfBoundsException("Szukany index nie znajduje się na liście");
     }
 
     public void addHead(T value) {
