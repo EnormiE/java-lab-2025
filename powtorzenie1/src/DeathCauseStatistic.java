@@ -12,7 +12,7 @@ public class DeathCauseStatistic {
     public static DeathCauseStatistic fromCsvLine(String line) {
         String[] segments = line.trim().split(",");
 //        System.out.println(segments[0]);
-        String code = segments[0];
+        String code = segments[0].trim();
         int[] deaths = new int[20];
         for (int i = 2; i < segments.length; ++i) {
             if (!segments[i].equals("-")) {
@@ -64,5 +64,10 @@ public class DeathCauseStatistic {
             }
         }
         return null; // gdy ktoś poda wiek > 999
+    }
+
+    @Override
+    public String toString() {
+        return icd10code;
     }
 }
