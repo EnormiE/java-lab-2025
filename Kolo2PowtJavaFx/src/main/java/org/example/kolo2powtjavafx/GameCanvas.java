@@ -26,7 +26,10 @@ public class GameCanvas extends Canvas {
     // Zad.7
     private final ArrayList<Brick> bricks = new ArrayList<>();
 
-    public GameCanvas(double width, double height) {
+    private final Runnable runOnEnd;
+
+
+    public GameCanvas(double width, double height, Runnable runOnEnd) {
         super(width, height);
         this.graphicsContext = getGraphicsContext2D();
         GraphicsItem.setCanvasSize(width, height);
@@ -34,6 +37,7 @@ public class GameCanvas extends Canvas {
         this.paddle = new Paddle();
         this.ball = new Ball();
         this.ball.setVelocity(0.5);
+        this.runOnEnd = runOnEnd;
 
         // Zad. 4
         setupAnimationLoop();
@@ -113,6 +117,7 @@ public class GameCanvas extends Canvas {
                     if (ball.getBottom() > 1) {
                         gameStarted = false;
                         System.out.println("Koniec gry!");
+                       runOnEnd.run();
                     }
 
                 } else {
