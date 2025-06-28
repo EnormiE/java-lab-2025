@@ -26,14 +26,20 @@ public class Main extends Application {
 //        end(primaryStage);
     }
 
-    public void end(boolean win) {
+    public void end(boolean win, String message) {
         EndCanvas endCanvas = new EndCanvas(512, 512);
         endCanvas.draw();
 
-        Label endMessage = new Label(win ? "Wygranko :D" : "Przegranko :<");
+        Label endMessage = new Label(win ? "Wygranko" : "Przegranko");
         endMessage.setTranslateX(0);
         endMessage.setTranslateY(-100);
-        endMessage.setStyle("-fx-font-size: 20px; -fx-text-fill: " + (win ? "green;" : "red;"));
+        endMessage.setStyle("-fx-font-size: 22px; -fx-text-fill: " + (win ? "green;" : "red;"));
+
+        Label endComment = new Label(message);
+        endComment.setTranslateX(0);
+        endComment.setTranslateY(-70);
+        endComment.setStyle("-fx-font-size: 16px; -fx-text-fill: " + (win ? "aquamarine;" : "magenta;"));
+
 
         Button closeButton = new Button("Wyjście");
         closeButton.setOnAction(e -> {
@@ -41,7 +47,7 @@ public class Main extends Application {
             primaryStage.close();
         });
 
-        StackPane root = new StackPane(endCanvas, endMessage, closeButton);
+        StackPane root = new StackPane(endCanvas, endMessage, endComment, closeButton);
         Scene scene = new Scene(root);
 
         primaryStage.setTitle(win ? "Gratulacje użytkowniku, wygrałeś..." : "Bambik");

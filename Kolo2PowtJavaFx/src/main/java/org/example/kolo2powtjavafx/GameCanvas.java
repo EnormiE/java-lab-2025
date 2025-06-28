@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import javafx.geometry.Point2D;
@@ -28,13 +29,13 @@ public class GameCanvas extends Canvas {
     private final ArrayList<Brick> bricks = new ArrayList<>();
 
 //    private final Runnable runOnEnd; // odpala funkcje po zakonczeniu gry
-    private final Consumer<Boolean> runOnEnd; // lepsze niż runnable bo argument przyjmuje
+    private final BiConsumer<Boolean, String> runOnEnd; // lepsze niż runnable bo argument przyjmuje
 
     private int pointsLeft = 5; // ile jeszcze musisz rozwalic cegiel, zeby wygrac
     private int bouncesLeft = 3; // ile jeszcze mozesz odbic razy pileczke, zeby nie przegrac
 
 
-    public GameCanvas(double width, double height, Consumer<Boolean> runOnEnd) {
+    public GameCanvas(double width, double height, BiConsumer<Boolean, String> runOnEnd) {
         super(width, height);
         this.graphicsContext = getGraphicsContext2D();
         GraphicsItem.setCanvasSize(width, height);
@@ -117,7 +118,8 @@ public class GameCanvas extends Canvas {
                 // koniec gierki, zdobyles tyle punktow ile trzeba
                 if (gameStarted && pointsLeft <= 0) {
                     gameStarted = false;
-                    runOnEnd.accept(true);
+                    System.out.println("Wygrana, zdobyłeś wymaganą ilość punktów!");
+                    runOnEnd.accept(true, "Zdobyłeś wymaganą ilość punktów!");
                 }
 
                 // Aktualizacja pozycji piłki
@@ -128,8 +130,8 @@ public class GameCanvas extends Canvas {
                     double canvasHeight = getHeight();
                     if (ball.getBottom() > 1) {
                         gameStarted = false;
-                        System.out.println("Koniec gry!");
-                        runOnEnd.accept(false);
+                        System.out.println("Przegrana, piłka wpadła pod mapę");
+                        runOnEnd.accept(false, "Piłka wpadła pod mapę :P");
                     }
 
                 } else {
@@ -150,7 +152,8 @@ public class GameCanvas extends Canvas {
                     // koniec gierki, nie masz już odbić od paletki dostępnych :<
                     if (gameStarted && bouncesLeft <= 0) {
                         gameStarted = false;
-                        runOnEnd.accept(false);
+                        System.out.println("Przegrana, za dużo razy odbiłeś piłkę od paletki");
+                        runOnEnd.accept(false, "Za dużo razy odbiłeś piłkę od paletki :<");
                     }
                     bouncesLeft--; // jedno odbicie od paletki mniej
                     double paddleCenter = paddle.getX() + paddle.getWidth() / 2;
@@ -165,7 +168,7 @@ public class GameCanvas extends Canvas {
                 // koniec gierki, jak rozwalisz wszystkie cegiełki :D
                 if (gameStarted && !iterator.hasNext()) {
                     gameStarted = false;
-                    runOnEnd.accept(true);
+                    runOnEnd.accept(true, "Rozwaliłeś wszystkei cegły :o");
                 }
                 while (iterator.hasNext()) {
                     Brick brick = iterator.next();
