@@ -27,9 +27,11 @@ public class GameCanvas extends Canvas {
     // Zad.7
     private final ArrayList<Brick> bricks = new ArrayList<>();
 
-//    private final Runnable runOnEnd;
+//    private final Runnable runOnEnd; // odpala funkcje po zakonczeniu gry
     private final Consumer<Boolean> runOnEnd; // lepsze niż runnable bo argument przyjmuje
 
+    private int pointsLeft = 5; // ile jeszcze musisz rozwalic cegiel, zeby wygrac
+    private int bouncesLeft = 3; // ile jeszcze mozesz odbic razy pileczke, zeby nie przegrac
 
 
     public GameCanvas(double width, double height, Consumer<Boolean> runOnEnd) {
@@ -112,10 +114,17 @@ public class GameCanvas extends Canvas {
                 double elapsedSeconds = (now - lastFrameTime) / 1_000_000_000.0;
                 lastFrameTime = now;
 
+                // koniec gierki, zdobyles tyle punktow ile trzeba
+                if (gameStarted && pointsLeft <= 0) {
+                    gameStarted = false;
+                    runOnEnd.accept(true);
+                }
+
                 // Aktualizacja pozycji piłki
                 if (gameStarted) {
                     ball.updatePosition(elapsedSeconds);
 
+                    // przegranko jak pilka wpadnie pod mape
                     double canvasHeight = getHeight();
                     if (ball.getBottom() > 1) {
                         gameStarted = false;
@@ -138,6 +147,12 @@ public class GameCanvas extends Canvas {
                     ball.bounceVertically();
                 }
                 if (shouldBallBounceFromPaddle()) {
+                    // koniec gierki, nie masz już odbić od paletki dostępnych :<
+                    if (gameStarted && bouncesLeft <= 0) {
+                        gameStarted = false;
+                        runOnEnd.accept(false);
+                    }
+                    bouncesLeft--; // jedno odbicie od paletki mniej
                     double paddleCenter = paddle.getX() + paddle.getWidth() / 2;
                     double ballCenter = ball.getLeft() + ball.getWidth() / 2;
                     double offset = (ballCenter - paddleCenter) / (paddle.getWidth() / 2); // wartość z przedziału -1 do 1
@@ -160,6 +175,7 @@ public class GameCanvas extends Canvas {
 
                     if (result != Brick.CrushType.NoCrush) {
                         iterator.remove(); // usuń cegłę
+                        pointsLeft--; // o 1 punkt bliżej do wygranej
 
                         if (result == Brick.CrushType.HorizontalCrush) {
                             ball.bounceHorizontally();
