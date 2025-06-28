@@ -110,7 +110,7 @@ public class GameCanvas extends Canvas {
                     ball.updatePosition(elapsedSeconds);
 
                     double canvasHeight = getHeight();
-                    if (ball.getBottom() > canvasHeight) {
+                    if (ball.getBottom() > 1) {
                         gameStarted = false;
                         System.out.println("Koniec gry!");
                     }
