@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    public boolean win = false;
+//    public boolean win = false;
     Stage primaryStage;
     @Override
     public void start(Stage primaryStage) {
@@ -26,7 +26,7 @@ public class Main extends Application {
 //        end(primaryStage);
     }
 
-    public void end() {
+    public void end(boolean win) {
         EndCanvas endCanvas = new EndCanvas(512, 512);
         endCanvas.draw();
 

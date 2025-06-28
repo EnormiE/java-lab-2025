@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 import javafx.geometry.Point2D;
 
@@ -26,10 +27,12 @@ public class GameCanvas extends Canvas {
     // Zad.7
     private final ArrayList<Brick> bricks = new ArrayList<>();
 
-    private final Runnable runOnEnd;
+//    private final Runnable runOnEnd;
+    private final Consumer<Boolean> runOnEnd; // lepsze niż runnable bo argument przyjmuje
 
 
-    public GameCanvas(double width, double height, Runnable runOnEnd) {
+
+    public GameCanvas(double width, double height, Consumer<Boolean> runOnEnd) {
         super(width, height);
         this.graphicsContext = getGraphicsContext2D();
         GraphicsItem.setCanvasSize(width, height);
@@ -117,7 +120,7 @@ public class GameCanvas extends Canvas {
                     if (ball.getBottom() > 1) {
                         gameStarted = false;
                         System.out.println("Koniec gry!");
-                       runOnEnd.run();
+                        runOnEnd.accept(false);
                     }
 
                 } else {
@@ -144,6 +147,11 @@ public class GameCanvas extends Canvas {
 
                 // Zad. 7
                 Iterator<Brick> iterator = bricks.iterator();
+                // koniec gierki, jak rozwalisz wszystkie cegiełki :D
+                if (gameStarted && !iterator.hasNext()) {
+                    gameStarted = false;
+                    runOnEnd.accept(true);
+                }
                 while (iterator.hasNext()) {
                     Brick brick = iterator.next();
                     Brick.CrushType result = brick.checkCollision(
@@ -197,9 +205,9 @@ public class GameCanvas extends Canvas {
                 Color.GREEN, Color.BLUE, Color.VIOLET
         };
 
-        for (int row = 2; row <= 7; row++) {
+        for (int row = 2; row <= 7; row++) { // default row = 7
             Color color = rowColors[row - 2];
-            for (int col = 0; col < 10; col++) {
+            for (int col = 0; col < 10; col++) { // default col = 10
                 bricks.add(new Brick(col, row, color));
             }
         }
