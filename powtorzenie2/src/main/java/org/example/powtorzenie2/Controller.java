@@ -7,8 +7,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import org.example.powtorzenie2.client.ServerThread;
+import org.example.powtorzenie2.server.Server;
+
+import java.io.IOException;
 
 public class Controller {
 
@@ -18,12 +23,29 @@ public class Controller {
     private Slider radiusSlider;
     @FXML
     private Canvas canvas;
+    @FXML
+    private TextField portField;
+    @FXML
+    private TextField addressField;
+
+    private ServerThread serverThread;
 
 
     public void onStartServerClicked(ActionEvent actionEvent) {
+        try {
+            String address = addressField.getText();
+            String port = portField.getText();
+            Server server = new Server(Integer.parseInt(port));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void onConnectClicked(ActionEvent actionEvent) {
+        String address = addressField.getText();
+        String port = portField.getText();
+        serverThread = new ServerThread(address, port);
+        serverThread.start(); // ważne!
     }
 
     public void onMouseClicked(MouseEvent mouseEvent) {
@@ -45,5 +67,6 @@ public class Controller {
         // x i y przesunięte o promień w celu wyśrodkowania
         // wysokość i szerokośc to dwukrotności promienia (średnica == 2 długości promienia)
 
+//        serverThread.send(color.toString() + "|" + radius); // wysyła do serwera, tylko jak jesteś klientem
     }
 }
