@@ -2,17 +2,23 @@ package org.example.powtorzenie2;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class Controller {
-    @FXML
-    private Label welcomeText;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
+    private ColorPicker colorPicker; // odpowiada linijce `<ColorPicker fx:id="colorPicker">` z app-view.fxml
+    @FXML
+    private Slider radiusSlider;
+    @FXML
+    private Canvas canvas;
+
 
     public void onStartServerClicked(ActionEvent actionEvent) {
     }
@@ -21,5 +27,23 @@ public class Controller {
     }
 
     public void onMouseClicked(MouseEvent mouseEvent) {
+        double x =  mouseEvent.getX();
+        double y =  mouseEvent.getY();
+
+        Color color = colorPicker.getValue();
+        double radius = radiusSlider.getValue();
+        Canvas currentCanvas = canvas;
+        System.out.println("Wybrany kolor: " + color.toString());
+        System.out.println("Wybrany radius: " + radius);
+        System.out.println("Obecna kanwa: " + currentCanvas.getWidth() + " x " + currentCanvas.getHeight());
+
+        GraphicsContext context = currentCanvas.getGraphicsContext2D();
+        context.setFill(color);
+
+        // rysuje owal wpisany w prostokąt
+        context.fillOval(x - radius, y - radius, radius * 2, radius * 2);
+        // x i y przesunięte o promień w celu wyśrodkowania
+        // wysokość i szerokośc to dwukrotności promienia (średnica == 2 długości promienia)
+
     }
 }
