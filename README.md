@@ -1,5 +1,16 @@
 # SQL
+
+```xml
+<dependencies>
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.50.2.0</version>
+    </dependency>
+</dependencies>
 ```
+
+```java
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
