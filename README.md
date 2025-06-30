@@ -11,17 +11,28 @@
 ```
 
 ```java
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class Main {
-    public static void main(String[] args) {
-        // Ścieżka do bazy danych (będzie utworzona lokalnie jako plik)
+public class DotServer {
+
+    private Connection conn;
+
+    public DotServer() {
+        connectToDatabase();
+        createDotTable();
+    }
+
+    private void connectToDatabase() {
         String url = "jdbc:sqlite:example.db";
+        try {
+            conn = DriverManager.getConnection(url);
+            System.out.println("Połączono z bazą danych.");
+        } catch (SQLException e) {
+            System.err.println("Błąd połączenia: " + e.getMessage());
+        }
+    }
 
-        // SQL do utworzenia tabeli
+    private void createDotTable() {
         String sql = """
             CREATE TABLE IF NOT EXISTS dot (
                 id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -32,16 +43,34 @@ public class Main {
             );
         """;
 
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement()) {
-
-            // Tworzenie tabeli
+        try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Tabela 'dot' została utworzona lub już istnieje.");
-
+            System.out.println("Tabela 'dot' gotowa.");
         } catch (SQLException e) {
-            System.out.println("Błąd połączenia lub tworzenia tabeli: " + e.getMessage());
+            System.err.println("Błąd tworzenia tabeli: " + e.getMessage());
         }
+    }
+
+    public void saveDot(Dot dot) {
+        String sql = "INSERT INTO dot(x, y, color, radius) VALUES(?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, dot.getX());
+            pstmt.setInt(2, dot.getY());
+            pstmt.setString(3, dot.getColor());
+            pstmt.setInt(4, dot.getRadius());
+            pstmt.executeUpdate();
+            System.out.println("Zapisano punkt do bazy.");
+        } catch (SQLException e) {
+            System.err.println("Błąd zapisu: " + e.getMessage());
+        }
+    }
+
+    // Do testów
+    public static void main(String[] args) {
+        DotServer server = new DotServer();
+        Dot dot = new Dot(100, 150, "red", 10);
+        server.saveDot(dot);
     }
 }
 ```
