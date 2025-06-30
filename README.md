@@ -1,3 +1,40 @@
+# SQL
+```
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.SQLException;
+
+public class Main {
+    public static void main(String[] args) {
+        // Ścieżka do bazy danych (będzie utworzona lokalnie jako plik)
+        String url = "jdbc:sqlite:example.db";
+
+        // SQL do utworzenia tabeli
+        String sql = """
+            CREATE TABLE IF NOT EXISTS dot (
+                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                x INTEGER NOT NULL,
+                y INTEGER NOT NULL,
+                color TEXT NOT NULL,
+                radius INTEGER NOT NULL
+            );
+        """;
+
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+
+            // Tworzenie tabeli
+            stmt.execute(sql);
+            System.out.println("Tabela 'dot' została utworzona lub już istnieje.");
+
+        } catch (SQLException e) {
+            System.out.println("Błąd połączenia lub tworzenia tabeli: " + e.getMessage());
+        }
+    }
+}
+```
+
 # Klasa
 
 Klasa jest to szablon, receptura za pomocą której tworzymy obiekty.
